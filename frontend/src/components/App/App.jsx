@@ -55,9 +55,6 @@ export default function App() {
         if (event.key.toLowerCase() === 'c') {
           window.speechSynthesis.cancel();
         }
-        if (event.key.toLowerCase() === 'h') {
-          handleFocus(audio);
-        }
       };
   
       window.addEventListener('keydown', handleKeyDown);
