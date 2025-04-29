@@ -17,7 +17,6 @@
 ## Purpose
 
 Mathster is a product designed for blind algebra/geometry students who face challenges with concepts such as graphs, shapes, and equations. Users can navigate the website with their voice and receive audio output as guidance and as feedback for their math questions.
-Mathster is a product designed for blind algebra/geometry students who face challenges with concepts such as graphs, shapes, and equations. Users can navigate the website with their voice and receive audio output as guidance and as feedback for their math questions.
 
 ### Features
 
@@ -68,7 +67,7 @@ Mathster accepts the following voice commands:
 
 ### Authors
 - Brianna Jackson
-- Connor Jonhson
+- Connor Johnson
 - Julian Ondrey
 - Stell Shuman-Thomas
 - Tyler Snow
