@@ -11,9 +11,10 @@ import { FaVolumeMute } from "react-icons/fa";
 import RecordAudio from '../audio-input.jsx';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('Sign In');
+  const [activeTab, setActiveTab] = useState('');
   const [token, setToken] = useState('');
   const [muted, setMuted] = useState(false)
+  const [intro, setIntro] = useState('')
 
   const { speak } = useSpeechSynthesis();
 
@@ -39,11 +40,28 @@ export default function App() {
           localStorage.removeItem('mathsterToken');
         }
       }
-      // handleFocus('Welcome to Mathster. etc.')
     };
   
     checkToken();
+    setIntro('Welcome to Mathster')
   }, []);
+
+  useEffect(() => {
+    handleFocus(intro)
+  }, [intro]);
+
+  useEffect(() => {
+      const handleKeyDown = (event) => {
+        if (event.key.toLowerCase() === 'c') {
+          window.speechSynthesis.cancel();
+        }
+      };
+  
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }, []);
   
 
   const signOut = () => {
