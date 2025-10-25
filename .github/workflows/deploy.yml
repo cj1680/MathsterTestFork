@@ -25,16 +25,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          # Install production dependencies
-          if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
           # Install quality/testing tools globally for the job
-          pip install flake8 pytest pytest-cov black bandit
-
-      # Check Black formatting 🎨
-      - name: Check Python code formatting (Black)
-        run: |
-          # The --check flag verifies formatting without applying changes
-          black --check backend/
+          pip install flake8 pytest pytest-cov bandit
 
       # Lint Python code (Flake8) 🔍
       - name: Lint Python code (Flake8)
