@@ -21,27 +21,35 @@ jobs:
         with:
           python-version: "3.9"
 
-      # Install Python dependencies
+      # Install Python dependencies and Test Runner ⚙️
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
+          # Install production dependencies
           if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
-          pip install flake8
+          # Install quality/testing tools globally for the job
+          pip install flake8 pytest pytest-cov black bandit
 
-      # Lint Python code
-      - name: Lint Python code
+      # Check Black formatting 🎨
+      - name: Check Python code formatting (Black)
         run: |
-          if [ -f .flake8 ] || [ -f setup.cfg ] || [ -f tox.ini ] || [ -f .pep8 ]; then
-            flake8 --exit-zero .
-          else
-            echo "No lint config found, skipping linting."
-          fi
-        
-      # Run Python tests
-      - name: Run Python tests
+          # The --check flag verifies formatting without applying changes
+          black --check backend/
+
+      # Lint Python code (Flake8) 🔍
+      - name: Lint Python code (Flake8)
         run: |
-          if [ -f pytest.ini ] || ls tests; then
-            pytest
-          else
-            echo "No tests found, skipping tests."
-          fi
+          # Only run flake8 on the backend directory
+          flake8 backend/
+
+      # Run Python Security Scan (Bandit) 🔒
+      - name: Run Python Security Scan (Bandit)
+        run: |
+          # Scan the backend for security issues, excluding the test files
+          bandit -r backend -ll -x backend/tests
+
+      # Run Python tests with Coverage ✅
+      - name: Run Python tests with Coverage
+        run: |
+          # Run pytest, generate coverage report, and fail if coverage is < 80%
+          pytest --cov=backend --cov-report=term --cov-fail-under=80 backend/tests/
