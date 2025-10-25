@@ -25,9 +25,13 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          # Install quality/testing tools globally for the job
-          pip install flask flake8 pytest pytest-cov bandit pytest-flask mock anthropic psycopg2 psycopg2-binary cloudinary
-
+          
+          # Install production dependencies (if they exist)
+          if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
+          
+          # ⭐ Explicitly install ALL major dependencies for testing ⭐
+          pip install flask anthropic psycopg2-binary cloudinary flake8 pytest pytest-cov black bandit pytest-flask
+    
       # Lint Python code (Flake8) 🔍
       - name: Lint Python code (Flake8)
         # ⭐ ADDED: Continue running the workflow even if linting fails.
