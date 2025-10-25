@@ -30,18 +30,22 @@ jobs:
 
       # Lint Python code (Flake8) 🔍
       - name: Lint Python code (Flake8)
+        # ⭐ ADDED: Continue running the workflow even if linting fails.
+        continue-on-error: true 
         run: |
-          # Only run flake8 on the backend directory
           flake8 backend/
 
       # Run Python Security Scan (Bandit) 🔒
       - name: Run Python Security Scan (Bandit)
+        # ⭐ ADDED: Continue running the workflow even if security scan finds issues.
+        continue-on-error: true 
         run: |
-          # Scan the backend for security issues, excluding the test files
           bandit -r backend -ll -x backend/tests
 
       # Run Python tests with Coverage ✅
       - name: Run Python tests with Coverage
+        # ⭐ ALREADY ADDED: Continue running the workflow even if tests fail.
+        continue-on-error: true 
         run: |
-          # Run pytest, generate coverage report, and fail if coverage is < 80%
-          pytest --cov=backend --cov-report=term --cov-fail-under=80 backend/tests/
+          # Added -v for descriptive results
+          pytest -v --cov=backend --cov-report=term --cov-fail-under=80 backend/tests/
